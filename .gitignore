@@ -1,0 +1,16 @@
+*
+!.gitignore
+
+!gvimrc
+!vimrc
+
+!after/
+!after/**
+!autoload/
+!autoload/**
+!colors/
+!colors/**
+!ftplugin/
+!ftplugin/**
+!plugin/
+!plugin/**

@@ -53,7 +53,9 @@ nnoremap <leader>w <C-w>
 nnoremap <leader>x <cmd>so %<cr>
 nnoremap <C-n>     <cmd>Explore<cr>
 
-autocmd BufWritePre * :silent! %s/\\s\\+$//e
+autocmd BufWritePre * :silent! %s/\s\+$//e
+" autocmd BufWritePre * :silent! %s/\\s\\+$//e
+" :%s/\s\+$//e
 
 "noremap <leader>bd <cmd>silent! %bd!|e#<CR>
 noremap <S-Q>      <NOP>
@@ -79,9 +81,18 @@ call plug#begin()
 call plug#end()
 
 "colorscheme onedark
-colorscheme base16-ashes
+colorscheme base16-gigavolt
 
 nnoremap <leader>ff <cmd>FZF<cr>
+
+function! SwitchSourceHeader()
+  if (expand ("%:e") == "cpp")
+    find %:t:r.h
+  elseif (expand ("%:e") == "h")
+    find %:t:r.cpp
+  endif
+endfun
+autocmd FileType cpp,h nmap <leader>h :call SwitchSourceHeader()<CR>
 
 set exrc
 set secure

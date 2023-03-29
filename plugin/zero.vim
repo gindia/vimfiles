@@ -1,4 +1,4 @@
-function! FindWord() 
+function! FindWord()
     grep! <cword>
     botright cwindow
 endfunction

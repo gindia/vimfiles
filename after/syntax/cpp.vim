@@ -9,12 +9,12 @@ syntax keyword cppTypes
             \ u8x3 u16x3 u32x3 u64x3 f32x3 f64x3
             \ i8x4 i16x4 i32x4 i64x4
             \ u8x4 u16x4 u32x4 u64x4 f32x4 f64x4
+            \ Allocator
 
 
 hi def link cppTypes Type
 
-
 syntax keyword cppSpecial
-            \ internal local global function inline_function global_const
+            \ local global function inline_function global_const external_function local_const
 
 hi def link cppSpecial Special

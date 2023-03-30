@@ -72,8 +72,15 @@ nnoremap <leader>j <cmd>m .+1<CR>==
 nnoremap <leader>k <cmd>m .-2<CR>==
 
 call plug#begin()
+  if has('nvim')
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'BurntSushi/ripgrep'
+    Plug 'sharkdp/fd'
+    Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+  else
     "https://github.com/junegunn/fzf/blob/master/README-VIM.md
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  endif
     Plug 'sheerun/vim-polyglot'
     Plug 'bfrg/vim-qf-preview'
     Plug 'chriskempson/base16-vim'
@@ -83,7 +90,13 @@ call plug#end()
 "colorscheme onedark
 colorscheme base16-gigavolt
 
-nnoremap <leader>ff <cmd>FZF<cr>
+if has('nvim')
+  nnoremap <leader>ff <cmd>Telescope find_files<cr>
+  nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+  nnoremap <leader>fb <cmd>Telescope buffers<cr>
+else
+  nnoremap <leader>ff <cmd>FZF<cr>
+endif
 
 function! SwitchSourceHeader()
   if (expand ("%:e") == "cpp")

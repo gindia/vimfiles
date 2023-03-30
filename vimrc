@@ -80,9 +80,10 @@ call plug#begin()
   else
     "https://github.com/junegunn/fzf/blob/master/README-VIM.md
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-  endif
-    Plug 'sheerun/vim-polyglot'
     Plug 'bfrg/vim-qf-preview'
+  endif
+
+    Plug 'sheerun/vim-polyglot'
     Plug 'chriskempson/base16-vim'
 
 call plug#end()

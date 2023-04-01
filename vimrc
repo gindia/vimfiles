@@ -2,7 +2,13 @@ set nocompatible
 syntax enable
 filetype plugin indent on
 
-set shell=cmd
+if has('win32')
+  set shell=pwsh
+  let &shellcmdflag = '-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
+  let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+  let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+  set shellquote= shellxquote=
+endif
 
 set belloff=all
 set mouse=a
@@ -82,10 +88,8 @@ call plug#begin()
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'bfrg/vim-qf-preview'
   endif
-
-    Plug 'sheerun/vim-polyglot'
-    Plug 'chriskempson/base16-vim'
-
+  Plug 'sheerun/vim-polyglot'
+  Plug 'chriskempson/base16-vim'
 call plug#end()
 
 "colorscheme onedark
@@ -97,6 +101,16 @@ if has('nvim')
   nnoremap <leader>fb <cmd>Telescope buffers<cr>
 else
   nnoremap <leader>ff <cmd>FZF<cr>
+endif
+
+if has('nvim')
+  nnoremap <leader>fw <cmd>Telescope grep_string<cr>
+else
+  function! FindWord()
+      grep! <cword>
+      botright cwindow
+  endfunction
+  nnoremap <leader>fw <cmd>silent! call FindWord()<cr>
 endif
 
 function! SwitchSourceHeader()

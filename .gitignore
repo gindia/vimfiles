@@ -10,6 +10,8 @@
 !after/**
 !autoload/
 !autoload/**
+!compiler/
+!compiler/**
 !colors/
 !colors/**
 !ftplugin/

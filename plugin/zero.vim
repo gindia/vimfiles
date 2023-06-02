@@ -9,8 +9,3 @@ function! ToggleCWindow()
     botright copen
 endfunction
 nnoremap <leader>qq <cmd>call         ToggleCWindow()<cr>
-
-
-" autocmd FileType qf,netrw,dosbatch,c,cpp,h,hpp :compiler batch
-" autocmd FileType go :compiler go
-" autocmd FileType py :compiler python

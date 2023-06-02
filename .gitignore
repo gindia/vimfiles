@@ -18,3 +18,5 @@
 !ftplugin/**
 !plugin/
 !plugin/**
+!lua/
+!lua/**

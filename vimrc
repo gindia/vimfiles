@@ -49,6 +49,7 @@ set statusline=
 set statusline+=\ %f\ %y\ %m
 set statusline+=%=
 set statusline+=\ %l:%p%%
+
 "set cmdheight=2
 
 set grepprg=rg\ --vimgrep
@@ -103,6 +104,7 @@ call plug#begin()
 
         Plug 'ray-x/lsp_signature.nvim'
 
+        Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
     else
         "https://github.com/junegunn/fzf/blob/master/README-VIM.md
         Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -113,37 +115,40 @@ call plug#begin()
     Plug 'chriskempson/base16-vim'
 
     Plug 'Mofiqul/vscode.nvim'
+
+    "" git shit
+    Plug 'tpope/vim-fugitive'
+    Plug 'itchyny/vim-gitbranch'
+
 call plug#end()
 
 colorscheme vscode
 " colorscheme zenburn
 " colorscheme base16-gigavolt
 
+" let g:mkdp_browser = 'brave'
+
 if has('nvim')
     lua require('first')
+
+    nnoremap <leader>ff <cmd>Telescope find_files<cr>
+    nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+    nnoremap <leader>fb <cmd>Telescope buffers<cr>
+
+    nnoremap <leader>fw <cmd>Telescope grep_string<cr>
+else
+    nnoremap <leader>ff <cmd>FZF<cr>
+
+    function! FindWord()
+        grep! <cword>
+        botright cwindow
+    endfunction
+    nnoremap <leader>fw <cmd>silent! call FindWord()<cr>
 endif
 
-if has('nvim')
-  nnoremap <leader>ff <cmd>Telescope find_files<cr>
-  nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-  nnoremap <leader>fb <cmd>Telescope buffers<cr>
-else
-  nnoremap <leader>ff <cmd>FZF<cr>
-endif
-
-if has('nvim')
-  nnoremap <leader>fw <cmd>Telescope grep_string<cr>
-else
-  function! FindWord()
-      grep! <cword>
-      botright cwindow
-  endfunction
-  nnoremap <leader>fw <cmd>silent! call FindWord()<cr>
-endif
 
 "use C not C++ for .h
 let c_syntax_for_h=1
-
 " function! SwitchSourceHeader()
 "   if (expand ("%:e") == "c")
 "     find %:t:r.h
@@ -153,12 +158,12 @@ let c_syntax_for_h=1
 " endfun
 " autocmd FileType c,h nmap <leader>h :call SwitchSourceHeader()<CR>
 
-" nnoremap <F12> <cmd>Make<cr>
-
-if has('nvim')
-    lua require('first')
-endif
 
 set exrc
 set secure
 
+" check this out  ---> https://www.tdaly.co.uk/post/vanilla-vim-statusline
+set statusline=
+set statusline+=\ %f\ %y\ %m\ %{gitbranch#name()}
+set statusline+=%=
+set statusline+=\ %l:%p%%

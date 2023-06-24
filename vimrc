@@ -146,6 +146,7 @@ else
     nnoremap <leader>fw <cmd>silent! call FindWord()<cr>
 endif
 
+let g:zig_fmt_autosave = 0
 
 "use C not C++ for .h
 let c_syntax_for_h=1
@@ -164,6 +165,6 @@ set secure
 
 " check this out  ---> https://www.tdaly.co.uk/post/vanilla-vim-statusline
 set statusline=
-set statusline+=\ %f\ %y\ %m\ %{gitbranch#name()}
+set statusline+=\ %f\ %y\ %m
 set statusline+=%=
-set statusline+=\ %l:%p%%
+set statusline+=\ (%{gitbranch#name()})\ %l:%p%%

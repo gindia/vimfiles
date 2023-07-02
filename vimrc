@@ -18,7 +18,7 @@ set splitright
 set nohlsearch
 set scrolloff=10
 set sidescrolloff=10
-set nowrap
+"set nowrap
 set expandtab
 set smarttab
 set tabstop=4 shiftwidth=4

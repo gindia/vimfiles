@@ -1,48 +1,73 @@
---[[
+vim.cmd([[
+if has('win32')
+    set shell=pwsh
+    let &shellcmdflag = '-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
+    let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+    let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+    set shellquote= shellxquote=
+endif
 
-=====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
-=====================================================================
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
+]])
 
-Kickstart.nvim is *not* a distribution.
-
-Kickstart.nvim is a template for your own configuration.
-  The goal is that you can read every line of code, top-to-bottom, understand
-  what your configuration is doing, and modify it to suit your needs.
-
-  Once you've done that, you should start exploring, configuring and tinkering to
-  explore Neovim!
-
-  If you don't know anything about Lua, I recommend taking some time to read through
-  a guide. One possible example:
-  - https://learnxinyminutes.com/docs/lua/
-
-
-  And then you can explore or search through `:help lua-guide`
-  - https://neovim.io/doc/user/lua-guide.html
-
-
-Kickstart Guide:
-
-I have left several `:help X` comments throughout the init.lua
-You should run that command and read that help section for more information.
-
-In addition, I have some `NOTE:` items throughout the file.
-These are for you, the reader to help understand what is happening. Feel free to delete
-them once you know what you're doing, but they should serve as a guide for when you
-are first encountering a few different constructs in your nvim config.
-
-I hope you enjoy your Neovim journey,
-- TJ
-
-P.S. You can delete this when you're done too. It's your config now :)
---]]
-
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
+vim.g.mapleader      = ' '
 vim.g.maplocalleader = ' '
+
+vim.o.hlsearch       = false
+vim.wo.number        = false
+vim.o.mouse          = 'a'
+vim.o.clipboard      = 'unnamedplus'
+vim.o.undofile       = true
+vim.o.ignorecase     = false
+vim.o.smartcase      = false
+vim.wo.signcolumn    = 'yes'
+vim.o.updatetime     = 250
+vim.o.timeoutlen     = 300
+vim.o.completeopt    = 'menu,menuone,noselect'
+vim.o.termguicolors  = true
+vim.o.splitbelow     = true
+vim.o.splitright     = true
+vim.o.wrap           = false
+
+vim.o.tabstop        = 4
+vim.o.shiftwidth     = 4
+vim.o.softtabstop    = 2
+vim.o.expandtab      = true
+vim.o.smarttab       = true
+
+vim.o.breakindent    = true
+vim.o.autoindent     = true
+vim.o.smartindent    = false
+
+vim.cmd('set visualbell')
+vim.cmd('set t_vb=')
+vim.cmd('set belloff=all')
+vim.cmd('set termguicolors')
+vim.cmd('set scrolloff=10')
+vim.cmd('set sidescrolloff=10')
+vim.cmd('set smarttab')
+vim.cmd('set shiftround')
+vim.cmd('set hidden')
+vim.cmd('set noswapfile')
+vim.cmd('set nobackup')
+vim.cmd('set nowritebackup')
+vim.cmd('set nospell')
+vim.cmd('set incsearch')
+vim.cmd('set colorcolumn=80')
+vim.cmd('set cursorline')
+vim.cmd('set cursorcolumn')
+vim.cmd('set autowriteall')
+vim.cmd('set noshowmode')
+vim.cmd('set updatetime=100')
+vim.cmd('set shortmess+=c')
+vim.cmd('set signcolumn=no')
+vim.cmd('set nonumber')
+vim.cmd('set foldmethod=marker')
+vim.cmd('set wildmenu')
+vim.cmd('set wildmode=full')
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
@@ -72,6 +97,7 @@ require('lazy').setup({
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
+  'tpope/vim-dispatch',
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
@@ -112,7 +138,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim',  opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -152,15 +178,62 @@ require('lazy').setup({
     },
   },
 
+  'Mofiqul/vscode.nvim',
   {
-    -- Theme inspired by Atom
     'navarasu/onedark.nvim',
     priority = 1000,
     config = function()
       vim.cmd.colorscheme 'onedark'
     end,
   },
+  {
+    'maxmx03/solarized.nvim',
+    priority = 1001,
+    config = function()
+      require('solarized').setup({
+        transparent = false, -- enable transparent background
+        styles = {
+          comments   = { italic = false },
+          functions  = { italic = false },
+          variables  = { italic = false },
+          numbers    = { italic = false },
+          constants  = { italic = false },
+          parameters = { italic = false },
+          keywords   = { italic = false },
+          types      = { italic = false },
+        },
+        enables = {
+          bufferline = true,
+          cmp = true,
+          diagnostic = true,
+          dashboard = true,
+          editor = true,
+          gitsign = true,
+          hop = true,
+          indentblankline = true,
+          lsp = true,
+          lspsaga = true,
+          navic = true,
+          neogit = true,
+          neotree = true,
+          notify = true,
+          semantic = true,
+          syntax = true,
+          telescope = true,
+          tree = true,
+          treesitter = true,
+          whichkey = true,
+          mini = true,
+        },
+        highlights = {
+        },
+        colors = {},
+        theme = 'default', -- or 'neosolarized' or 'neo' for short
+      })
 
+      -- vim.cmd.colorscheme 'solarized'
+    end,
+  },
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -168,7 +241,7 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'onedark',
+        theme = 'auto',
         component_separators = '|',
         section_separators = '',
       },
@@ -196,15 +269,16 @@ require('lazy').setup({
       -- Fuzzy Finder Algorithm which requires local dependencies to be built.
       -- Only load if `make` is available. Make sure you have the system
       -- requirements installed.
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        -- NOTE: If you are having trouble with this installation,
-        --       refer to the README for telescope-fzf-native for more instructions.
-        build = 'make',
-        cond = function()
-          return vim.fn.executable 'make' == 1
-        end,
-      },
+      -- {
+      --   'nvim-telescope/telescope-fzf-native.nvim',
+      --   -- NOTE: If you are having trouble with this installation,
+      --   --       refer to the README for telescope-fzf-native for more instructions.
+      --   build = 'make',
+      --   cond = function()
+      --     return vim.fn.executable 'make' == 1
+      --   end,
+      -- },
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
     },
   },
 
@@ -230,64 +304,46 @@ require('lazy').setup({
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   -- { import = 'custom.plugins' },
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = "cd app && yarn install",
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+      vim.g.mkdp_browser = 'C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe'
+    end,
+    ft = { "markdown" },
+  },
 }, {})
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
--- NOTE: You can change these options as you wish!
 
--- Set highlight on search
-vim.o.hlsearch = false
+vim.cmd('let g:netrw_sizestyle="h"')
 
--- Make line numbers default
-vim.wo.number = true
-
--- Enable mouse mode
-vim.o.mouse = 'a'
-
--- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
-vim.o.clipboard = 'unnamedplus'
-
--- Enable break indent
-vim.o.breakindent = true
-
--- Save undo history
-vim.o.undofile = true
-
--- Case-insensitive searching UNLESS \C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
-
--- Keep signcolumn on by default
-vim.wo.signcolumn = 'yes'
-
--- Decrease update time
-vim.o.updatetime = 250
-vim.o.timeoutlen = 300
-
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
-
--- NOTE: You should make sure your terminal supports this
-vim.o.termguicolors = true
+-- vim.cmd.colorscheme 'murphy'
 
 -- [[ Basic Keymaps ]]
-
--- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
+
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
+vim.keymap.set('n', '<leader>w', '<C-w>', { silent = true })
+vim.keymap.set('n', '<leader>x', ':so %<cr>', { silent = true })
+vim.keymap.set('n', '<C-n>', ':Explore<cr>', { silent = true })
+
+vim.keymap.set('n', '<leader>j', '<cmd>m .+1<CR>==', { silent = true })
+vim.keymap.set('n', '<leader>k', '<cmd>m .-2<CR>==', { silent = true })
+
 -- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+-- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+vim.keymap.set('n', '<leader>qe', vim.diagnostic.setloclist, { desc = '[Q]uick Open [E]rrors list' })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -345,7 +401,7 @@ local function live_grep_git_root()
   local git_root = find_git_root()
   if git_root then
     require('telescope.builtin').live_grep({
-      search_dirs = {git_root},
+      search_dirs = { git_root },
     })
   end
 end
@@ -364,13 +420,16 @@ vim.keymap.set('n', '<leader>/', function()
 end, { desc = '[/] Fuzzily search in current buffer' })
 
 vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
-vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sG', ':LiveGrepGitRoot<cr>', { desc = '[S]earch by [G]rep on Git Root' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
+
+
+vim.keymap.set('n', '<leader>vm', require('telescope.builtin').help_tags, { desc = '[V]i[M] help' })
+vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[F]ind [F]iles' })
+vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = '[F]ind [W]ard' })
+vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = '[F]ind by [G]rep' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -442,6 +501,9 @@ vim.defer_fn(function()
 end, 0)
 
 -- [[ Configure LSP ]]
+
+vim.lsp.set_log_level('OFF')
+
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
@@ -466,7 +528,7 @@ local on_attach = function(_, bufnr)
   nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
   nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  -- nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -474,11 +536,11 @@ local on_attach = function(_, bufnr)
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-  nmap('<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, '[W]orkspace [L]ist Folders')
+  -- nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+  -- nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+  -- nmap('<leader>wl', function()
+  --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  -- end, '[W]orkspace [L]ist Folders')
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
@@ -510,8 +572,15 @@ require('mason-lspconfig').setup()
 --
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
+
 local servers = {
-  -- clangd = {},
+  -- clangd = {
+  --   root_dir = {
+  --     "compile_commands.json",
+  --     "compile_flags.txt",
+  --     ".git",
+  --   }
+  -- },
   -- gopls = {},
   -- pyright = {},
   -- rust_analyzer = {},
@@ -548,8 +617,46 @@ mason_lspconfig.setup_handlers {
       settings = servers[server_name],
       filetypes = (servers[server_name] or {}).filetypes,
     }
-  end,
+  end
 }
+
+require 'lspconfig'.gdscript.setup {
+  -- cmd = { "nc", "localhost", "6005" },
+  -- filetypes = { "gd", "gdscript", "gdscript3" },
+  root_dir = require 'lspconfig'.util.root_pattern('project.godot') or require 'lspconfig'.util.path.dirname
+}
+
+require 'lspconfig'.clangd.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+  cmd = {
+    "clangd",
+    "--background-index",
+    "-j=8",
+    "--pch-storage=memory",
+    "--clang-tidy",
+  },
+  -- filetypes = { "gd", "gdscript", "gdscript3" },
+  -- root_dir = require'lspconfig'.util.root_pattern('project.godot') or require'lspconfig'.util.path.dirname
+}
+
+-- clangd = {
+--   root_dir = {
+--     "compile_commands.json",
+--     "compile_flags.txt",
+--     ".git",
+--   }
+-- },
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    -- Disable virtual_text
+    virtual_text = false,
+    -- Disable signs
+    signs = false,
+  }
+)
+
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
@@ -601,6 +708,43 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+
+
+--- my extra
+vim.keymap.set('', '<F12>', ":Make<cr>", { silent = true })
+vim.keymap.set('', '<F5>', ":Make run<cr>", { silent = true })
+
+vim.o.exrc = true
+vim.o.secure = true
+
+vim.cmd([[
+function! ToggleCWindow()
+    for winnr in range(1, winnr('$'))
+        if getwinvar(winnr, '&syntax') == 'qf'
+            cclose
+            return
+        endif
+    endfor
+
+    botright copen
+endfunction
+nnoremap <leader>qq <cmd>call ToggleCWindow()<cr>
+
+let g:zig_fmt_autosave = 0
+
+autocmd FileType cpp,hpp,c,h nnoremap <leader>h :ClangdSwitchSourceHeader<CR>
+
+"use C not C++ for .h
+let c_syntax_for_h=0
+
+
+" remove trailing whitespace
+autocmd BufWritePre * :silent! %s/\s\+$//e
+" autocmd BufWritePre * :silent! %s/\\s\\+$//e
+" :%s/\s\+$//e
+
+]])
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

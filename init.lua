@@ -42,6 +42,10 @@ vim.o.breakindent    = true
 vim.o.autoindent     = true
 vim.o.smartindent    = false
 
+vim.o.signcolumn = 'number'
+vim.o.nu         = true
+vim.o.rnu        = true
+
 vim.cmd('set visualbell')
 vim.cmd('set t_vb=')
 vim.cmd('set belloff=all')
@@ -63,8 +67,6 @@ vim.cmd('set autowriteall')
 vim.cmd('set noshowmode')
 vim.cmd('set updatetime=100')
 vim.cmd('set shortmess+=c')
-vim.cmd('set signcolumn=no')
-vim.cmd('set nonumber')
 vim.cmd('set foldmethod=marker')
 vim.cmd('set wildmenu')
 vim.cmd('set wildmode=full')
@@ -132,6 +134,9 @@ require('lazy').setup({
       -- Adds LSP completion capabilities
       'hrsh7th/cmp-nvim-lsp',
 
+      -- Adds path completion capabilities
+      'hrsh7th/cmp-path',
+
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
     },
@@ -183,8 +188,48 @@ require('lazy').setup({
     'navarasu/onedark.nvim',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      -- vim.cmd.colorscheme 'onedark'
     end,
+  },
+  {
+    "ellisonleao/gruvbox.nvim",
+    priority = 1000 ,
+    config = function ()
+      require("gruvbox").setup({
+        terminal_colors = true, -- add neovim terminal colors
+        undercurl = true,
+        underline = true,
+        bold = true,
+        italic = {
+          strings = false,
+          emphasis = false,
+          comments = false,
+          operators = false,
+          folds = false,
+        },
+        strikethrough = true,
+        invert_selection = false,
+        invert_signs = false,
+        invert_tabline = false,
+        invert_intend_guides = false,
+        inverse = true, -- invert background for search, diffs, statuslines and errors
+        contrast = "hard", -- can be "hard", "soft" or empty string
+        palette_overrides = {},
+        overrides = {},
+        dim_inactive = false,
+        transparent_mode = false,
+      })
+      -- vim.o.background = 'dark'
+      -- vim.cmd.colorscheme 'gruvbox'
+    end,
+  },
+  {
+    "phha/zenburn.nvim",
+    priority = 1000,
+    config = function()
+      require("zenburn").setup()
+      vim.cmd.colorscheme 'zenburn'
+    end
   },
   {
     'maxmx03/solarized.nvim',
@@ -241,11 +286,19 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'auto',
+        -- theme = 'auto',
+        theme = 'zenburn',
         component_separators = '|',
         section_separators = '',
       },
     },
+  },
+
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "VeryLazy",
+    opts = {},
+    config = function(_, opts) require'lsp_signature'.setup(opts) end
   },
 
   {
@@ -647,7 +700,6 @@ require 'lspconfig'.clangd.setup {
 --     ".git",
 --   }
 -- },
-
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     -- Disable virtual_text
@@ -706,12 +758,14 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
+    { name = 'path' },
   },
 }
 
 
 
 --- my extra
+
 vim.keymap.set('', '<F12>', ":Make<cr>", { silent = true })
 vim.keymap.set('', '<F5>', ":Make run<cr>", { silent = true })
 
@@ -736,7 +790,7 @@ let g:zig_fmt_autosave = 0
 autocmd FileType cpp,hpp,c,h nnoremap <leader>h :ClangdSwitchSourceHeader<CR>
 
 "use C not C++ for .h
-let c_syntax_for_h=0
+" let c_syntax_for_h=0
 
 
 " remove trailing whitespace
@@ -745,6 +799,10 @@ autocmd BufWritePre * :silent! %s/\s\+$//e
 " :%s/\s\+$//e
 
 ]])
+
+
+
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

@@ -699,33 +699,20 @@ mason_lspconfig.setup_handlers {
   end
 }
 
-require 'lspconfig'.gdscript.setup {
-  -- cmd = { "nc", "localhost", "6005" },
-  -- filetypes = { "gd", "gdscript", "gdscript3" },
-  root_dir = require 'lspconfig'.util.root_pattern('project.godot') or require 'lspconfig'.util.path.dirname
+-- extra lsp
+require 'lspconfig'.clangd.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+  cmd = {
+    "clangd",
+    "--background-index",
+    "-j=8",
+    "--pch-storage=memory",
+    "--clang-tidy",
+  },
 }
 
--- require 'lspconfig'.clangd.setup {
---   capabilities = capabilities,
---   on_attach = on_attach,
---   cmd = {
---     "clangd",
---     "--background-index",
---     "-j=8",
---     "--pch-storage=memory",
---     "--clang-tidy",
---   },
---   -- filetypes = { "gd", "gdscript", "gdscript3" },
---   -- root_dir = require'lspconfig'.util.root_pattern('project.godot') or require'lspconfig'.util.path.dirname
--- }
-
--- clangd = {
---   root_dir = {
---     "compile_commands.json",
---     "compile_flags.txt",
---     ".git",
---   }
--- },
+-- diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     -- Disable virtual_text

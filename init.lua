@@ -43,8 +43,8 @@ vim.o.autoindent     = true
 vim.o.smartindent    = false
 
 vim.o.signcolumn = 'number'
-vim.o.nu         = true
-vim.o.rnu        = true
+vim.o.nu         = false
+vim.o.rnu        = false
 
 vim.cmd('set visualbell')
 vim.cmd('set t_vb=')
@@ -103,6 +103,9 @@ require('lazy').setup({
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
+
+  -- Gdb
+  'sakhnik/nvim-gdb',
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
@@ -702,19 +705,19 @@ require 'lspconfig'.gdscript.setup {
   root_dir = require 'lspconfig'.util.root_pattern('project.godot') or require 'lspconfig'.util.path.dirname
 }
 
-require 'lspconfig'.clangd.setup {
-  capabilities = capabilities,
-  on_attach = on_attach,
-  cmd = {
-    "clangd",
-    "--background-index",
-    "-j=8",
-    "--pch-storage=memory",
-    "--clang-tidy",
-  },
-  -- filetypes = { "gd", "gdscript", "gdscript3" },
-  -- root_dir = require'lspconfig'.util.root_pattern('project.godot') or require'lspconfig'.util.path.dirname
-}
+-- require 'lspconfig'.clangd.setup {
+--   capabilities = capabilities,
+--   on_attach = on_attach,
+--   cmd = {
+--     "clangd",
+--     "--background-index",
+--     "-j=8",
+--     "--pch-storage=memory",
+--     "--clang-tidy",
+--   },
+--   -- filetypes = { "gd", "gdscript", "gdscript3" },
+--   -- root_dir = require'lspconfig'.util.root_pattern('project.godot') or require'lspconfig'.util.path.dirname
+-- }
 
 -- clangd = {
 --   root_dir = {
@@ -825,7 +828,6 @@ autocmd BufWritePre * :silent! %s/\s\+$//e
 " :%s/\s\+$//e
 
 ]])
-
 
 
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 *
 
 !.gitignore
@@ -12,3 +13,10 @@
 !ftplugin/**
 !lua/
 !lua/**
+=======
+tags
+test.sh
+.luarc.json
+nvim
+lazy-lock.json
+>>>>>>> db07e1ba5de02b8beddfccdd7e2fe33b5c9789ab

@@ -123,6 +123,7 @@ require('lazy').setup({
     },
   },
 
+
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -183,102 +184,117 @@ require('lazy').setup({
     },
   },
 
-  'Mofiqul/vscode.nvim',
+  -----------------------------------------------------------------------------
+  ------------------------------- Colors --------------------------------------
+  -----------------------------------------------------------------------------
   {
-    'navarasu/onedark.nvim',
+    'Mofiqul/vscode.nvim',
     priority = 1000,
     config = function()
-      -- vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme 'vscode'
     end,
   },
-  {
-    "ellisonleao/gruvbox.nvim",
-    priority = 1000 ,
-    config = function ()
-      require("gruvbox").setup({
-        terminal_colors = true, -- add neovim terminal colors
-        undercurl = true,
-        underline = true,
-        bold = true,
-        italic = {
-          strings = false,
-          emphasis = false,
-          comments = false,
-          operators = false,
-          folds = false,
-        },
-        strikethrough = true,
-        invert_selection = false,
-        invert_signs = false,
-        invert_tabline = false,
-        invert_intend_guides = false,
-        inverse = true, -- invert background for search, diffs, statuslines and errors
-        contrast = "hard", -- can be "hard", "soft" or empty string
-        palette_overrides = {},
-        overrides = {},
-        dim_inactive = false,
-        transparent_mode = false,
-      })
-      -- vim.o.background = 'dark'
-      -- vim.cmd.colorscheme 'gruvbox'
-    end,
-  },
-  {
-    "phha/zenburn.nvim",
-    priority = 1000,
-    config = function()
-      require("zenburn").setup()
-      vim.cmd.colorscheme 'zenburn'
-    end
-  },
-  {
-    'maxmx03/solarized.nvim',
-    priority = 1001,
-    config = function()
-      require('solarized').setup({
-        transparent = false, -- enable transparent background
-        styles = {
-          comments   = { italic = false },
-          functions  = { italic = false },
-          variables  = { italic = false },
-          numbers    = { italic = false },
-          constants  = { italic = false },
-          parameters = { italic = false },
-          keywords   = { italic = false },
-          types      = { italic = false },
-        },
-        enables = {
-          bufferline = true,
-          cmp = true,
-          diagnostic = true,
-          dashboard = true,
-          editor = true,
-          gitsign = true,
-          hop = true,
-          indentblankline = true,
-          lsp = true,
-          lspsaga = true,
-          navic = true,
-          neogit = true,
-          neotree = true,
-          notify = true,
-          semantic = true,
-          syntax = true,
-          telescope = true,
-          tree = true,
-          treesitter = true,
-          whichkey = true,
-          mini = true,
-        },
-        highlights = {
-        },
-        colors = {},
-        theme = 'default', -- or 'neosolarized' or 'neo' for short
-      })
 
-      -- vim.cmd.colorscheme 'solarized'
-    end,
-  },
+  -- {
+  --   'navarasu/onedark.nvim',
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'onedark'
+  --   end,
+  -- },
+
+  -- {
+  --   "ellisonleao/gruvbox.nvim",
+  --   -- priority = 1000 ,
+  --   config = function ()
+  --     require("gruvbox").setup({
+  --       terminal_colors = true, -- add neovim terminal colors
+  --       undercurl = true,
+  --       underline = true,
+  --       bold = true,
+  --       italic = {
+  --         strings = false,
+  --         emphasis = false,
+  --         comments = false,
+  --         operators = false,
+  --         folds = false,
+  --       },
+  --       strikethrough = true,
+  --       invert_selection = false,
+  --       invert_signs = false,
+  --       invert_tabline = false,
+  --       invert_intend_guides = false,
+  --       inverse = true, -- invert background for search, diffs, statuslines and errors
+  --       contrast = "hard", -- can be "hard", "soft" or empty string
+  --       palette_overrides = {},
+  --       overrides = {},
+  --       dim_inactive = false,
+  --       transparent_mode = false,
+  --     })
+  --     -- vim.o.background = 'dark'
+  --     -- vim.cmd.colorscheme 'gruvbox'
+  --   end,
+  -- },
+  -- {
+  --   "phha/zenburn.nvim",
+  --   priority = 1000,
+  --   config = function()
+  --     require("zenburn").setup()
+  --     vim.cmd.colorscheme 'zenburn'
+  --   end
+  -- },
+  -- {
+  --   'maxmx03/solarized.nvim',
+  --   -- priority = 1001,
+  --   config = function()
+  --     require('solarized').setup({
+  --       transparent = false, -- enable transparent background
+  --       styles = {
+  --         comments   = { italic = false },
+  --         functions  = { italic = false },
+  --         variables  = { italic = false },
+  --         numbers    = { italic = false },
+  --         constants  = { italic = false },
+  --         parameters = { italic = false },
+  --         keywords   = { italic = false },
+  --         types      = { italic = false },
+  --       },
+  --       enables = {
+  --         bufferline = true,
+  --         cmp = true,
+  --         diagnostic = true,
+  --         dashboard = true,
+  --         editor = true,
+  --         gitsign = true,
+  --         hop = true,
+  --         indentblankline = true,
+  --         lsp = true,
+  --         lspsaga = true,
+  --         navic = true,
+  --         neogit = true,
+  --         neotree = true,
+  --         notify = true,
+  --         semantic = true,
+  --         syntax = true,
+  --         telescope = true,
+  --         tree = true,
+  --         treesitter = true,
+  --         whichkey = true,
+  --         mini = true,
+  --       },
+  --       highlights = {
+  --       },
+  --       colors = {},
+  --       theme = 'default', -- or 'neosolarized' or 'neo' for short
+  --     })
+
+  --     -- vim.cmd.colorscheme 'solarized'
+  --   end,
+  -- },
+
+
+  -----------------------------------------------------------------------------
+  -----------------------------------------------------------------------------
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -286,8 +302,8 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        -- theme = 'auto',
-        theme = 'zenburn',
+        theme = 'auto',
+        -- theme = 'zenburn',
         component_separators = '|',
         section_separators = '',
       },
@@ -299,6 +315,13 @@ require('lazy').setup({
     event = "VeryLazy",
     opts = {},
     config = function(_, opts) require'lsp_signature'.setup(opts) end
+  },
+
+  {
+    -- debuger
+    'sakhnik/nvim-gdb',
+    -- config = function(_, opts)
+    -- end
   },
 
   {
@@ -706,6 +729,9 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     virtual_text = false,
     -- Disable signs
     signs = false,
+
+    undercurl = false,
+    underline = false,
   }
 )
 

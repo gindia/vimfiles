@@ -43,8 +43,8 @@ vim.o.autoindent     = true
 vim.o.smartindent    = false
 
 vim.o.signcolumn = 'number'
-vim.o.nu         = false
-vim.o.rnu        = false
+vim.o.nu         = true
+vim.o.rnu        = true
 
 vim.cmd('set visualbell')
 vim.cmd('set t_vb=')
@@ -190,110 +190,15 @@ require('lazy').setup({
   -----------------------------------------------------------------------------
   ------------------------------- Colors --------------------------------------
   -----------------------------------------------------------------------------
+  -- 'Mofiqul/vscode.nvim',
+
   {
-    'Mofiqul/vscode.nvim',
+    'kepano/flexoki-neovim',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'vscode'
+      vim.cmd.colorscheme 'flexoki-dark'
     end,
   },
-
-  -- {
-  --   'navarasu/onedark.nvim',
-  --   priority = 1000,
-  --   config = function()
-  --     vim.cmd.colorscheme 'onedark'
-  --   end,
-  -- },
-
-  -- {
-  --   "ellisonleao/gruvbox.nvim",
-  --   -- priority = 1000 ,
-  --   config = function ()
-  --     require("gruvbox").setup({
-  --       terminal_colors = true, -- add neovim terminal colors
-  --       undercurl = true,
-  --       underline = true,
-  --       bold = true,
-  --       italic = {
-  --         strings = false,
-  --         emphasis = false,
-  --         comments = false,
-  --         operators = false,
-  --         folds = false,
-  --       },
-  --       strikethrough = true,
-  --       invert_selection = false,
-  --       invert_signs = false,
-  --       invert_tabline = false,
-  --       invert_intend_guides = false,
-  --       inverse = true, -- invert background for search, diffs, statuslines and errors
-  --       contrast = "hard", -- can be "hard", "soft" or empty string
-  --       palette_overrides = {},
-  --       overrides = {},
-  --       dim_inactive = false,
-  --       transparent_mode = false,
-  --     })
-  --     -- vim.o.background = 'dark'
-  --     -- vim.cmd.colorscheme 'gruvbox'
-  --   end,
-  -- },
-  -- {
-  --   "phha/zenburn.nvim",
-  --   priority = 1000,
-  --   config = function()
-  --     require("zenburn").setup()
-  --     vim.cmd.colorscheme 'zenburn'
-  --   end
-  -- },
-  -- {
-  --   'maxmx03/solarized.nvim',
-  --   -- priority = 1001,
-  --   config = function()
-  --     require('solarized').setup({
-  --       transparent = false, -- enable transparent background
-  --       styles = {
-  --         comments   = { italic = false },
-  --         functions  = { italic = false },
-  --         variables  = { italic = false },
-  --         numbers    = { italic = false },
-  --         constants  = { italic = false },
-  --         parameters = { italic = false },
-  --         keywords   = { italic = false },
-  --         types      = { italic = false },
-  --       },
-  --       enables = {
-  --         bufferline = true,
-  --         cmp = true,
-  --         diagnostic = true,
-  --         dashboard = true,
-  --         editor = true,
-  --         gitsign = true,
-  --         hop = true,
-  --         indentblankline = true,
-  --         lsp = true,
-  --         lspsaga = true,
-  --         navic = true,
-  --         neogit = true,
-  --         neotree = true,
-  --         notify = true,
-  --         semantic = true,
-  --         syntax = true,
-  --         telescope = true,
-  --         tree = true,
-  --         treesitter = true,
-  --         whichkey = true,
-  --         mini = true,
-  --       },
-  --       highlights = {
-  --       },
-  --       colors = {},
-  --       theme = 'default', -- or 'neosolarized' or 'neo' for short
-  --     })
-
-  --     -- vim.cmd.colorscheme 'solarized'
-  --   end,
-  -- },
 
 
   -----------------------------------------------------------------------------
@@ -399,8 +304,6 @@ require('lazy').setup({
 -- See `:help vim.o`
 
 vim.cmd('let g:netrw_sizestyle="h"')
-
--- vim.cmd.colorscheme 'murphy'
 
 -- [[ Basic Keymaps ]]
 -- See `:help vim.keymap.set()`
@@ -700,17 +603,17 @@ mason_lspconfig.setup_handlers {
 }
 
 -- extra lsp
-require 'lspconfig'.clangd.setup {
-  capabilities = capabilities,
-  on_attach = on_attach,
-  cmd = {
-    "clangd",
-    "--background-index",
-    "-j=8",
-    "--pch-storage=memory",
-    "--clang-tidy",
-  },
-}
+-- require 'lspconfig'.clangd.setup {
+--   capabilities = capabilities,
+--   on_attach = on_attach,
+--   cmd = {
+--     "clangd",
+--     "--background-index",
+--     "-j=8",
+--     "--pch-storage=memory",
+--     "--clang-tidy",
+--   },
+-- }
 
 -- diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(

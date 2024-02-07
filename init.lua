@@ -44,7 +44,7 @@ vim.o.smartindent    = false
 
 vim.o.signcolumn = 'number'
 vim.o.nu         = true
-vim.o.rnu        = true
+vim.o.rnu        = false
 
 vim.cmd('set visualbell')
 vim.cmd('set t_vb=')

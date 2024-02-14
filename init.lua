@@ -190,13 +190,29 @@ require('lazy').setup({
   -----------------------------------------------------------------------------
   ------------------------------- Colors --------------------------------------
   -----------------------------------------------------------------------------
+
   -- 'Mofiqul/vscode.nvim',
+  -- 'kepano/flexoki-neovim',
 
   {
-    'kepano/flexoki-neovim',
+    'NLKNguyen/papercolor-theme',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'flexoki-dark'
+
+      vim.cmd([[
+      let g:PaperColor_Theme_Options = {
+        \   'theme': {
+        \     'default.dark': {
+        \       'override' : {
+        \         'color05' : ['#008000', '2'],
+        \       }
+        \     }
+        \   }
+        \ }
+      ]])
+
+      vim.cmd.colorscheme 'PaperColor'
+      -- vim.cmd.colorscheme 'flexoki-dark'
     end,
   },
 
@@ -603,17 +619,17 @@ mason_lspconfig.setup_handlers {
 }
 
 -- extra lsp
--- require 'lspconfig'.clangd.setup {
---   capabilities = capabilities,
---   on_attach = on_attach,
---   cmd = {
---     "clangd",
---     "--background-index",
---     "-j=8",
---     "--pch-storage=memory",
---     "--clang-tidy",
---   },
--- }
+require 'lspconfig'.clangd.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+  cmd = {
+    "clangd",
+    "--background-index",
+    "-j=8",
+    "--pch-storage=memory",
+    "--clang-tidy",
+  },
+}
 
 -- diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -716,6 +732,7 @@ autocmd FileType cpp,hpp,c,h nnoremap <leader>h :ClangdSwitchSourceHeader<CR>
 autocmd BufWritePre * :silent! %s/\s\+$//e
 " autocmd BufWritePre * :silent! %s/\\s\\+$//e
 " :%s/\s\+$//e
+
 
 ]])
 

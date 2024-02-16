@@ -699,7 +699,7 @@ cmp.setup {
 
 
 
---- my extra
+--- my extra ------------------------------------------------------------------
 
 vim.keymap.set('', '<F12>', ":Make<cr>", { silent = true })
 vim.keymap.set('', '<F5>', ":Make run<cr>", { silent = true })
@@ -732,12 +732,6 @@ autocmd FileType cpp,hpp,c,h nnoremap <leader>h :ClangdSwitchSourceHeader<CR>
 autocmd BufWritePre * :silent! %s/\s\+$//e
 " autocmd BufWritePre * :silent! %s/\\s\\+$//e
 " :%s/\s\+$//e
-
-
 ]])
 
-
-
-
--- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

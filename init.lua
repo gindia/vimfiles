@@ -216,6 +216,7 @@ require('lazy').setup({
     end,
   },
 
+  'habamax/vim-godot',
 
   -----------------------------------------------------------------------------
   -----------------------------------------------------------------------------
@@ -628,14 +629,20 @@ require 'lspconfig'.clangd.setup {
     "-j=8",
     "--pch-storage=memory",
     "--clang-tidy",
+    "--header-insertion=never",
   },
+}
+
+require 'lspconfig'.gdscript.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
 }
 
 -- diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     -- Disable virtual_text
-    virtual_text = false,
+    virtual_text = true,
     -- Disable signs
     signs = false,
 
@@ -704,9 +711,6 @@ cmp.setup {
 vim.keymap.set('', '<F12>', ":Make<cr>", { silent = true })
 vim.keymap.set('', '<F5>', ":Make run<cr>", { silent = true })
 
-vim.o.exrc = true
-vim.o.secure = true
-
 vim.cmd([[
 function! ToggleCWindow()
     for winnr in range(1, winnr('$'))
@@ -723,15 +727,35 @@ nnoremap <leader>qq <cmd>call ToggleCWindow()<cr>
 let g:zig_fmt_autosave = 0
 
 autocmd FileType cpp,hpp,c,h nnoremap <leader>h :ClangdSwitchSourceHeader<CR>
+autocmd FileType zig set mp=zig\ build\ -p\ out\ --prefix-lib-dir\ .\ --prefix-exe-dir\ .
 
 "use C not C++ for .h
-" let c_syntax_for_h=0
+let c_syntax_for_h=0
 
 
 " remove trailing whitespace
 autocmd BufWritePre * :silent! %s/\s\+$//e
 " autocmd BufWritePre * :silent! %s/\\s\\+$//e
 " :%s/\s\+$//e
+
+" let g:godot_executable = 'godot_lts_3_5_3'
+let g:godot_executable = 'godot_4_2_1'
+func! GodotSettings() abort
+    " setlocal foldmethod=expr
+    setlocal tabstop=4
+    nnoremap <buffer> <F4> :GodotRunLast<CR>
+    nnoremap <buffer> <F5> :GodotRun<CR>
+    nnoremap <buffer> <F6> :GodotRunCurrent<CR>
+    nnoremap <buffer> <F7> :GodotRunFZF<CR>
+endfunc
+augroup godot | au!
+    au FileType gdscript call GodotSettings()
+augroup end
+
 ]])
 
+
+
+vim.o.exrc = true
+vim.o.secure = true
 -- vim: ts=2 sts=2 sw=2 et

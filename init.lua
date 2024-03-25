@@ -42,9 +42,9 @@ vim.o.breakindent    = true
 vim.o.autoindent     = true
 vim.o.smartindent    = false
 
-vim.o.signcolumn = 'number'
-vim.o.nu         = true
-vim.o.rnu        = false
+vim.o.signcolumn     = 'number'
+vim.o.nu             = true
+vim.o.rnu            = false
 
 vim.cmd('set visualbell')
 vim.cmd('set t_vb=')
@@ -191,14 +191,29 @@ require('lazy').setup({
   ------------------------------- Colors --------------------------------------
   -----------------------------------------------------------------------------
 
-  -- 'Mofiqul/vscode.nvim',
   -- 'kepano/flexoki-neovim',
 
   {
-    'NLKNguyen/papercolor-theme',
+    'Mofiqul/vscode.nvim',
     priority = 1000,
     config = function()
+      -- vim.cmd.colorscheme 'vscode'
+    end,
+  },
 
+  {
+    "ellisonleao/gruvbox.nvim",
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme 'gruvbox'
+    end,
+    opts = ...
+  },
+
+  {
+    'NLKNguyen/papercolor-theme',
+    -- priority = 1000,
+    config = function()
       vim.cmd([[
       let g:PaperColor_Theme_Options = {
         \   'theme': {
@@ -211,7 +226,7 @@ require('lazy').setup({
         \ }
       ]])
 
-      vim.cmd.colorscheme 'PaperColor'
+      -- vim.cmd.colorscheme 'PaperColor'
       -- vim.cmd.colorscheme 'flexoki-dark'
     end,
   },
@@ -239,7 +254,7 @@ require('lazy').setup({
     "ray-x/lsp_signature.nvim",
     event = "VeryLazy",
     opts = {},
-    config = function(_, opts) require'lsp_signature'.setup(opts) end
+    config = function(_, opts) require 'lsp_signature'.setup(opts) end
   },
 
   {
@@ -311,7 +326,8 @@ require('lazy').setup({
     build = "cd app && yarn install",
     init = function()
       vim.g.mkdp_filetypes = { "markdown" }
-      vim.g.mkdp_browser = 'C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe'
+      -- vim.g.mkdp_browser = 'C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe'
+      vim.g.mkdp_browser = 'google-chrome'
     end,
     ft = { "markdown" },
   },
@@ -620,20 +636,25 @@ mason_lspconfig.setup_handlers {
 }
 
 -- extra lsp
-require 'lspconfig'.clangd.setup {
-  capabilities = capabilities,
-  on_attach = on_attach,
-  cmd = {
-    "clangd",
-    "--background-index",
-    "-j=8",
-    "--pch-storage=memory",
-    "--clang-tidy",
-    "--header-insertion=never",
-  },
-}
+-- require 'lspconfig'.clangd.setup {
+--   capabilities = capabilities,
+--   on_attach = on_attach,
+--   cmd = {
+--     "clangd",
+--     "--background-index",
+--     "-j=8",
+--     "--pch-storage=memory",
+--     "--clang-tidy",
+--     "--header-insertion=never",
+--   },
+-- }
 
 require 'lspconfig'.gdscript.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+}
+
+require 'lspconfig'.zls.setup {
   capabilities = capabilities,
   on_attach = on_attach,
 }
@@ -727,7 +748,7 @@ nnoremap <leader>qq <cmd>call ToggleCWindow()<cr>
 let g:zig_fmt_autosave = 0
 
 autocmd FileType cpp,hpp,c,h nnoremap <leader>h :ClangdSwitchSourceHeader<CR>
-autocmd FileType zig set mp=zig\ build\ -p\ out\ --prefix-lib-dir\ .\ --prefix-exe-dir\ .
+autocmd FileType zig set mp=zig\ build\ --prefix-lib-dir\ .\ --prefix-exe-dir\ .
 
 "use C not C++ for .h
 let c_syntax_for_h=0

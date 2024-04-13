@@ -1,16 +1,16 @@
 vim.cmd([[
-if has('win32')
+  if has('win32')
     set shell=pwsh
     let &shellcmdflag = '-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
     let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
     let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
     set shellquote= shellxquote=
-endif
+  endif
 
-inoremap , ,<c-g>u
-inoremap . .<c-g>u
-inoremap ! !<c-g>u
-inoremap ? ?<c-g>u
+  inoremap , ,<c-g>u
+  inoremap . .<c-g>u
+  inoremap ! !<c-g>u
+  inoremap ? ?<c-g>u
 ]])
 
 vim.g.mapleader      = ' '
@@ -735,46 +735,45 @@ vim.keymap.set('', '<leader>b', ":Make<cr>", { silent = true })
 vim.keymap.set('', '<leader>r', ":Make run<cr>", { silent = true })
 
 vim.cmd([[
-function! ToggleCWindow()
+  function! ToggleCWindow()
     for winnr in range(1, winnr('$'))
-        if getwinvar(winnr, '&syntax') == 'qf'
-            cclose
-            return
-        endif
+      if getwinvar(winnr, '&syntax') == 'qf'
+        cclose
+        return
+      endif
     endfor
 
     botright copen
-endfunction
-nnoremap <leader>qq <cmd>call ToggleCWindow()<cr>
+  endfunction
+  nnoremap <leader>qq <cmd>call ToggleCWindow()<cr>
 
-let g:zig_fmt_autosave = 0
+  let g:zig_fmt_autosave = 0
 
-"autocmd FileType cpp,hpp,c,h nnoremap <leader>h :ClangdSwitchSourceHeader<CR>
-autocmd FileType zig set mp=zig\ build\ --prefix-lib-dir\ .\ --prefix-exe-dir\ .
+  "autocmd FileType cpp,hpp,c,h nnoremap <leader>h :ClangdSwitchSourceHeader<CR>
+  autocmd FileType zig set mp=zig\ build\ --prefix-lib-dir\ .\ --prefix-exe-dir\ .
 
-"use C not C++ for .h
-let c_syntax_for_h=0
+  "use C not C++ for .h
+  let c_syntax_for_h=0
 
 
-" remove trailing whitespace
-autocmd BufWritePre * :silent! %s/\s\+$//e
-" autocmd BufWritePre * :silent! %s/\\s\\+$//e
-" :%s/\s\+$//e
+  " remove trailing whitespace
+  autocmd BufWritePre * :silent! %s/\s\+$//e
+  " autocmd BufWritePre * :silent! %s/\\s\\+$//e
+  " :%s/\s\+$//e
 
-" let g:godot_executable = 'godot_lts_3_5_3'
-let g:godot_executable = 'godot_4_2_1'
-func! GodotSettings() abort
+  " let g:godot_executable = 'godot_lts_3_5_3'
+  let g:godot_executable = 'godot_4_2_1'
+  func! GodotSettings() abort
     " setlocal foldmethod=expr
     setlocal tabstop=4
     nnoremap <buffer> <F4> :GodotRunLast<CR>
     nnoremap <buffer> <F5> :GodotRun<CR>
     nnoremap <buffer> <F6> :GodotRunCurrent<CR>
     nnoremap <buffer> <F7> :GodotRunFZF<CR>
-endfunc
-augroup godot | au!
+  endfunc
+  augroup godot | au!
     au FileType gdscript call GodotSettings()
-augroup end
-
+  augroup end
 ]])
 
 

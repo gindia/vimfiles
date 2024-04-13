@@ -452,7 +452,7 @@ vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
+    ensure_installed = { 'lua', 'vimdoc', 'vim', 'bash' },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
@@ -649,11 +649,13 @@ mason_lspconfig.setup_handlers {
 --   },
 -- }
 
+-- builtin within godot
 require 'lspconfig'.gdscript.setup {
   capabilities = capabilities,
   on_attach = on_attach,
 }
 
+-- installed in the system/dev environmet
 require 'lspconfig'.zls.setup {
   capabilities = capabilities,
   on_attach = on_attach,
@@ -729,8 +731,8 @@ cmp.setup {
 
 --- my extra ------------------------------------------------------------------
 
-vim.keymap.set('', '<F12>', ":Make<cr>", { silent = true })
-vim.keymap.set('', '<F5>', ":Make run<cr>", { silent = true })
+vim.keymap.set('', '<leader>b', ":Make<cr>", { silent = true })
+vim.keymap.set('', '<leader>r', ":Make run<cr>", { silent = true })
 
 vim.cmd([[
 function! ToggleCWindow()
@@ -747,7 +749,7 @@ nnoremap <leader>qq <cmd>call ToggleCWindow()<cr>
 
 let g:zig_fmt_autosave = 0
 
-autocmd FileType cpp,hpp,c,h nnoremap <leader>h :ClangdSwitchSourceHeader<CR>
+"autocmd FileType cpp,hpp,c,h nnoremap <leader>h :ClangdSwitchSourceHeader<CR>
 autocmd FileType zig set mp=zig\ build\ --prefix-lib-dir\ .\ --prefix-exe-dir\ .
 
 "use C not C++ for .h

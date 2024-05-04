@@ -11,6 +11,8 @@
 !doc/**
 !ftplugin/
 !ftplugin/**
+!after/
+!after/**
 !lua/
 !lua/**
 =======

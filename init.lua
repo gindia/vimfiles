@@ -457,7 +457,12 @@ vim.defer_fn(function()
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
 
-    highlight = { enable = true },
+    highlight = {
+      enable = true,
+      disable = function(lang, bufnr) -- Disable in large C buffers
+        return lang == "c" and vim.api.nvim_buf_line_count(bufnr) > 2000
+      end,
+    },
     indent = { enable = true },
     incremental_selection = {
       enable = true,
@@ -517,7 +522,7 @@ end, 0)
 
 -- [[ Configure LSP ]]
 
-vim.lsp.set_log_level('OFF')
+vim.lsp.set_log_level('DEBUG')
 
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
@@ -656,10 +661,10 @@ require 'lspconfig'.gdscript.setup {
 }
 
 -- installed in the system/dev environmet
-require 'lspconfig'.zls.setup {
-  capabilities = capabilities,
-  on_attach = on_attach,
-}
+-- require 'lspconfig'.zls.setup {
+--   capabilities = capabilities,
+--   on_attach = on_attach,
+-- }
 
 -- diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -673,7 +678,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     underline = false,
   }
 )
-
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
@@ -747,10 +751,9 @@ vim.cmd([[
   endfunction
   nnoremap <leader>qq <cmd>call ToggleCWindow()<cr>
 
-  let g:zig_fmt_autosave = 0
-
-  "autocmd FileType cpp,hpp,c,h nnoremap <leader>h :ClangdSwitchSourceHeader<CR>
-  autocmd FileType zig set mp=zig\ build\ --prefix-lib-dir\ .\ --prefix-exe-dir\ .
+  " let g:zig_fmt_autosave = 0
+  " autocmd FileType cpp,hpp,c,h nnoremap <leader>h :ClangdSwitchSourceHeader<CR>
+  " autocmd FileType zig set mp=zig\ build\ --prefix-lib-dir\ .\ --prefix-exe-dir\ .
 
   "use C not C++ for .h
   let c_syntax_for_h=0

@@ -1,7 +1,7 @@
 set shiftwidth=4
 
-set path=.,,..,../..,./*,./*/*,../*,./**,../**,include,include/*,include/**
-"" set path+=.,,..,include
+set path+=.,,..,../..,./*,./*/*,../*,./**,../**,include,include/*,include/**
+" set path+=.,,..,include
 "set path+=,C:/Program\\\ Files/Microsoft\\\ Visual\\\ Studio/2022/Community/VC/Tools/MSVC/14.34.31933/include
 "set path+=,C:/Program\\\ Files/Microsoft\\\ Visual\\\ Studio/2022/Community/VC/Tools/MSVC/14.34.31933/ATLMFC/include
 "set path+=,C:/Program\\\ Files/Microsoft\\\ Visual\\\ Studio/2022/Community/VC/Auxiliary/VS/include

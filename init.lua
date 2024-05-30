@@ -33,7 +33,7 @@ vim.o.splitright     = true
 vim.o.wrap           = false
 
 vim.o.tabstop        = 4
-vim.o.shiftwidth     = 4
+vim.o.shiftwidth     = 2
 vim.o.softtabstop    = 2
 vim.o.expandtab      = true
 vim.o.smarttab       = true
@@ -661,16 +661,16 @@ require 'lspconfig'.gdscript.setup {
 }
 
 -- installed in the system/dev environmet
--- require 'lspconfig'.zls.setup {
---   capabilities = capabilities,
---   on_attach = on_attach,
--- }
+require 'lspconfig'.zls.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+}
 
--- diagnostics
+-- diagnostics -- I only want auto complete
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     -- Disable virtual_text
-    virtual_text = true,
+    virtual_text = false,
     -- Disable signs
     signs = false,
 
@@ -751,8 +751,9 @@ vim.cmd([[
   endfunction
   nnoremap <leader>qq <cmd>call ToggleCWindow()<cr>
 
-  " let g:zig_fmt_autosave = 0
-  " autocmd FileType cpp,hpp,c,h nnoremap <leader>h :ClangdSwitchSourceHeader<CR>
+  let g:zig_fmt_autosave = 0
+  " autocmd FileType cpp,c nnoremap <leader>h :ClangdSwitchSourceHeader<CR>
+  autocmd FileType c nnoremap <leader>h :e %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
   " autocmd FileType zig set mp=zig\ build\ --prefix-lib-dir\ .\ --prefix-exe-dir\ .
 
   "use C not C++ for .h
@@ -765,7 +766,7 @@ vim.cmd([[
   " :%s/\s\+$//e
 
   " let g:godot_executable = 'godot_lts_3_5_3'
-  let g:godot_executable = 'godot_4_2_1'
+  let g:godot_executable = '~/third_party/Godot_v4.2.1-stable_linux.x86_64'
   func! GodotSettings() abort
     " setlocal foldmethod=expr
     setlocal tabstop=4

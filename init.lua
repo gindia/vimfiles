@@ -33,7 +33,7 @@ vim.o.splitright     = true
 vim.o.wrap           = false
 
 vim.o.tabstop        = 4
-vim.o.shiftwidth     = 2
+vim.o.shiftwidth     = 4
 vim.o.softtabstop    = 2
 vim.o.expandtab      = true
 vim.o.smarttab       = true
@@ -191,7 +191,6 @@ require('lazy').setup({
   ------------------------------- Colors --------------------------------------
   -----------------------------------------------------------------------------
 
-  -- 'kepano/flexoki-neovim',
 
   {
     'Mofiqul/vscode.nvim',
@@ -205,14 +204,21 @@ require('lazy').setup({
     "ellisonleao/gruvbox.nvim",
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'gruvbox'
+      -- vim.cmd.colorscheme 'gruvbox'
     end,
     opts = ...
   },
 
   {
+    'kepano/flexoki-neovim',
+    config = function()
+      -- vim.cmd.colorscheme 'flexoki-dark'
+    end,
+    opts = ...
+  },
+  {
     'NLKNguyen/papercolor-theme',
-    -- priority = 1000,
+    priority = 1000,
     config = function()
       vim.cmd([[
       let g:PaperColor_Theme_Options = {
@@ -227,13 +233,45 @@ require('lazy').setup({
       ]])
 
       -- vim.cmd.colorscheme 'PaperColor'
-      -- vim.cmd.colorscheme 'flexoki-dark'
+    end,
+  },
+
+  {
+    'navarasu/onedark.nvim',
+    priority = 1000,
+    config = function()
+      require 'onedark'.setup {
+        style = 'cool',
+      }
+      vim.cmd.colorscheme 'onedark'
     end,
   },
 
   'habamax/vim-godot',
-
   -----------------------------------------------------------------------------
+
+  { -- neotest
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-neotest/nvim-nio",
+      "nvim-lua/plenary.nvim",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-treesitter/nvim-treesitter",
+
+      -- drivers
+      "lawrence-laz/neotest-zig",
+    },
+
+    config = function()
+      require("neotest").setup({
+        adapters = {
+          -- Registration
+          require("neotest-zig")({ dap = { adapter = "lldb", } }),
+        }
+      })
+    end,
+  }, -- neotest
+
   -----------------------------------------------------------------------------
   {
     -- Set lualine as statusline
@@ -641,18 +679,18 @@ mason_lspconfig.setup_handlers {
 }
 
 -- extra lsp
--- require 'lspconfig'.clangd.setup {
---   capabilities = capabilities,
---   on_attach = on_attach,
---   cmd = {
---     "clangd",
---     "--background-index",
---     "-j=8",
---     "--pch-storage=memory",
---     "--clang-tidy",
---     "--header-insertion=never",
---   },
--- }
+require 'lspconfig'.clangd.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+  cmd = {
+    "clangd",
+    "--background-index",
+    "-j=8",
+    "--pch-storage=memory",
+    "--clang-tidy",
+    "--header-insertion=never",
+  },
+}
 
 -- builtin within godot
 require 'lspconfig'.gdscript.setup {
@@ -778,6 +816,10 @@ vim.cmd([[
   augroup godot | au!
     au FileType gdscript call GodotSettings()
   augroup end
+
+
+  nnoremap <F12> :lua require("neotest").run.run()<cr>
+  nnoremap <F9>  :lua require("neotest").quickfix<cr>
 ]])
 
 

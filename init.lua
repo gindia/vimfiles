@@ -28,7 +28,7 @@ vim.o.updatetime     = 250
 vim.o.timeoutlen     = 300
 vim.o.completeopt    = 'menu,menuone,noselect'
 vim.o.termguicolors  = true
-vim.o.splitbelow     = true
+vim.o.splitbelow     = false
 vim.o.splitright     = true
 vim.o.wrap           = false
 
@@ -560,7 +560,7 @@ end, 0)
 
 -- [[ Configure LSP ]]
 
-vim.lsp.set_log_level('DEBUG')
+vim.lsp.set_log_level('OFF')
 
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)

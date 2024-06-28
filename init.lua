@@ -102,7 +102,7 @@ require('lazy').setup({
   'tpope/vim-dispatch',
 
   -- Detect tabstop and shiftwidth automatically
-  'tpope/vim-sleuth',
+  -- 'tpope/vim-sleuth',
 
   -- Gdb
   'sakhnik/nvim-gdb',
@@ -713,7 +713,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     signs = false,
 
     undercurl = false,
-    underline = false,
+    underline = true,
   }
 )
 
@@ -820,6 +820,8 @@ vim.cmd([[
 
   nnoremap <F12> :lua require("neotest").run.run()<cr>
   nnoremap <F9>  :lua require("neotest").quickfix<cr>
+
+  nnoremap <M-k> :Man<cr>
 ]])
 
 

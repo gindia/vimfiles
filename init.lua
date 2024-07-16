@@ -1,11 +1,12 @@
 vim.cmd([[
-  if has('win32')
-    set shell=pwsh
-    let &shellcmdflag = '-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
-    let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-    let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-    set shellquote= shellxquote=
-  endif
+  " enable in power shell disable in cmd !
+  " if has('win32')
+  "   set shell=pwsh
+  "   let &shellcmdflag = '-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
+  "   let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+  "   let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+  "   set shellquote= shellxquote=
+  " endif
 
   inoremap , ,<c-g>u
   inoremap . .<c-g>u
@@ -530,7 +531,8 @@ vim.defer_fn(function()
     highlight = {
       enable = true,
       disable = function(lang, bufnr) -- Disable in large C buffers
-        return lang == "c" and vim.api.nvim_buf_line_count(bufnr) > 2000
+        return lang == "c"
+        -- and vim.api.nvim_buf_line_count(bufnr) > 1000
       end,
     },
     indent = { enable = true },
@@ -822,8 +824,8 @@ vim.cmd([[
   nnoremap <leader>qq <cmd>call ToggleCWindow()<cr>
 
   let g:zig_fmt_autosave = 0
-  " autocmd FileType cpp,c nnoremap <leader>h :ClangdSwitchSourceHeader<CR>
-  autocmd FileType c nnoremap <leader>h :e %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
+  autocmd FileType cpp,c nnoremap <leader>h :ClangdSwitchSourceHeader<CR>
+  " autocmd FileType c nnoremap <leader>h :e %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
   " autocmd FileType zig set mp=zig\ build\ --prefix-lib-dir\ .\ --prefix-exe-dir\ .
 
   "use C not C++ for .h

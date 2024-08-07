@@ -1,12 +1,12 @@
 vim.cmd([[
   " enable in power shell disable in cmd !
-  " if has('win32')
-  "   set shell=pwsh
-  "   let &shellcmdflag = '-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
-  "   let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-  "   let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-  "   set shellquote= shellxquote=
-  " endif
+  if has('win32')
+    set shell=pwsh
+    let &shellcmdflag = '-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
+    let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+    let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+    set shellquote= shellxquote=
+  endif
 
   inoremap , ,<c-g>u
   inoremap . .<c-g>u

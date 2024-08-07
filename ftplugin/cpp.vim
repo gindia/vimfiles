@@ -1,6 +1,6 @@
-set shiftwidth=4
+set shiftwidth=2
 
-set path=.,,..,../..,./*,./*/*,../*,./**,../**
+set path+=.,,..,../..,./*,./*/*,../*,./**,../**,include,include/*,include/**
 " set path+=,include
 " set path+=,C:/Program\\\ Files/Microsoft\\\ Visual\\\ Studio/2022/Community/VC/Tools/MSVC/14.34.31933/include
 " set path+=,C:/Program\\\ Files/Microsoft\\\ Visual\\\ Studio/2022/Community/VC/Tools/MSVC/14.34.31933/ATLMFC/include
@@ -15,16 +15,16 @@ set path=.,,..,../..,./*,./*/*,../*,./**,../**
 
 " set path=.,,..,../..,./*,./*/*,../*,~/,~/**,/usr/include/*
 
-function! Mosh_Flip_Ext()
-  " Switch editing between .c* and .h* files (and more).
-  " Since .h file can be in a different dir, call find.
-  if match(expand("%"),'\.cpp') > 0
-    let s:flipname = substitute(expand("%"),'\.cpp\(.*\)','.h\1',"")
-    exe ":find " s:flipname
-  elseif match(expand("%"),"\\.h") > 0
-    let s:flipname = substitute(expand("%"),'\.h\(.*\)','.cpp\1',"")
-    exe ":find " s:flipname
-  endif
-endfun
-
-map <leader>h :call Mosh_Flip_Ext()<CR>
+" function! Mosh_Flip_Ext()
+"   " Switch editing between .c* and .h* files (and more).
+"   " Since .h file can be in a different dir, call find.
+"   if match(expand("%"),'\.cpp') > 0
+"     let s:flipname = substitute(expand("%"),'\.cpp\(.*\)','.h\1',"")
+"     exe ":find " s:flipname
+"   elseif match(expand("%"),"\\.h") > 0
+"     let s:flipname = substitute(expand("%"),'\.h\(.*\)','.cpp\1',"")
+"     exe ":find " s:flipname
+"   endif
+" endfun
+"
+" map <leader>h :call Mosh_Flip_Ext()<CR>
